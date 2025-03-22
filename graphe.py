@@ -6,6 +6,13 @@ import string
 # genere un graphe aleatoire
 def generer_graphe(nb_noeuds, vertice_proba, option_poids):
     G = nx.gnp_random_graph(nb_noeuds, vertice_proba)
+    
+    # ajout d'attributs parent, visité et distance
+    nx.set_node_attributes(G, False, "marked")  
+    nx.set_node_attributes(G, None, "parent") 
+    nx.set_node_attributes(G, None, "distance") 
+    
+    
     # lettre pour les noeuds
     mapping = {i: string.ascii_uppercase[i] for i in range(nb_noeuds)}
     G = nx.relabel_nodes(G, mapping)
@@ -32,8 +39,11 @@ def afficher_graphe(G, option_poids):
     
     plt.show()
 
-
+# le sommet de départ sera toujours 'A'
 def parcours_profondeur(G):
+    for u in G.nodes:
+   
+         
     
 if __name__ == "__main__":
     G = generer_graphe(random.randint(5,10), 0.3, False)
