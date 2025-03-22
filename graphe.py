@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 import random
 import string
 
@@ -39,7 +40,8 @@ def afficher_graphe(G, option_poids):
     
     plt.show()
 
-# le sommet de départ sera toujours 'A'
+# PARCOURS EN PROFONDEUR
+# le sommet de départ sera toujours 'A' et si le graphe n'est pas connexe on y va en ordre alphabetique
 def parcours_profondeur(G):
     for noeud in G.nodes:       
         if G.nodes[noeud]['marque'] == False:
@@ -59,3 +61,12 @@ if __name__ == "__main__":
     G = generer_graphe(random.randint(5,10), 0.3, False)
     afficher_graphe(G, False)
     parcours_profondeur(G)
+
+# pour les noeuds interactifs
+# si on clic et la comparaison de parcours ok 
+#   -> noeud change de couleur
+#   -> you cant click on it anymore
+#
+# si on clic et il y a une erreur dans le parcours
+#   -> node becomes red and fades back to orange
+#
