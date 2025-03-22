@@ -8,9 +8,9 @@ def generer_graphe(nb_noeuds, vertice_proba, option_poids):
     G = nx.gnp_random_graph(nb_noeuds, vertice_proba)
     
     # ajout d'attributs parent, visité et distance
-    nx.set_node_attributes(G, False, "marked")  
+    nx.set_node_attributes(G, False, "marque")  
     nx.set_node_attributes(G, None, "parent") 
-    nx.set_node_attributes(G, None, "distance") 
+    nx.set_node_attributes(G, 0, "distance") 
     
     
     # lettre pour les noeuds
@@ -41,10 +41,21 @@ def afficher_graphe(G, option_poids):
 
 # le sommet de départ sera toujours 'A'
 def parcours_profondeur(G):
-    for u in G.nodes:
+    for noeud in G.nodes:       
+        if G.nodes[noeud]['marque'] == False:
+            visiter_profondeur(G, noeud)
    
-         
+def visiter_profondeur(G, noeud):
+    G.nodes[noeud]['marque'] = True
+    print(noeud)
+    for voisin in G.neighbors(noeud):
+        if G.nodes[voisin]['marque'] == False:
+            G.nodes[voisin]['parent'] = noeud
+            G.nodes[voisin]['distance'] = G.nodes[noeud]['distance'] + 1
+            visiter_profondeur(G, voisin)
+        
     
 if __name__ == "__main__":
     G = generer_graphe(random.randint(5,10), 0.3, False)
     afficher_graphe(G, False)
+    parcours_profondeur(G)
