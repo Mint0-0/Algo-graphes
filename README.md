@@ -16,3 +16,10 @@ Par la suite pour lancer le programme dans un terminal il suffit de faire cette 
 ``` 
 python3 graphe.py
 ```
+
+## Fonctionnalités
+- [x] Génération de graphes aléatoires
+- [x] Conversion de graphes Networkx vers Dash Cytoscape
+- [ ] Visualisation de graphe avec Dash Cytoscape
+- [ ] Interface interactive
+- [ ] Exploration des graphes interactive
