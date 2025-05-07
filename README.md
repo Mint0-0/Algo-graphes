@@ -1,7 +1,8 @@
-# Algo-graphes
+# Algo-graphes (en cours)
 
 
-
+## Description
+Ce projet est un programme python permettant la pratique de parcours d'algorithmes tels que le parcours en largeur, le parcours en profondeur... Le programme propose des graphes aléatoirement générés avec NetworkX pour visualiser et pratiquer des parcours plus facilement.
 
 ## Utilisation
 
