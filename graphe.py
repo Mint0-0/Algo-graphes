@@ -8,6 +8,9 @@ import random
 import string
 import heapq
 
+app = dash.Dash(__name__)
+cyto.load_extra_layouts()
+
 # genere un graphe aleatoire
 def generer_graphe(nb_noeuds, vertice_proba, option_poids):
     G = nx.gnp_random_graph(nb_noeuds, vertice_proba)
@@ -48,10 +51,48 @@ def conversion_nx_cytoscape(G, option_poids):
         elements.append({'data': donnee_arete})
         
     print(elements)
+    return elements
+
+app.layout = html.Div([
+    html.H1("Graphe aléatoire"),
+html.Div([
+        html.Button("Générer le graphe", id='generate-btn'),
+    ], style={'margin-bottom': '20px'}),
+    
+     cyto.Cytoscape(
+        id='cytoscape-graph',
+        layout={'name': 'cose'},
+        style={'width': '100%', 'height': '500px'},
+        elements=[]
+    ) 
+    ])
+
+@app.callback(
+    Output('cytoscape-graph', 'elements'),
+    Input('generate-btn', 'n_clicks'),
+)
+
+def generer_graphe_dash(n_clicks):
+    nb_noeuds = random.randint(5, 10)
+    proba = 0.3
+    option_poids = False
+
+    G = generer_graphe(nb_noeuds, proba, option_poids)
+    elements = conversion_nx_cytoscape(G, option_poids)
+    return elements
 
 
+def update_graph(n_clicks):
+    if n_clicks is None:
+        return []
 
+    nb_noeuds = random.randint(5, 10)
+    proba = 0.3
+    option_poids = False  
 
+    G = generer_graphe(nb_noeuds, proba, option_poids)
+    elements = conversion_nx_cytoscape(G, option_poids)
+    return elements
 
 # noeuds -> nx
 # lignes -> plt
@@ -68,6 +109,9 @@ def afficher_graphe(G, option_poids):
         nx.draw_networkx_edge_labels(G, pos, edge_labels=poids_vertice)
     
     plt.show()
+
+
+
 
 # PARCOURS EN PROFONDEUR
 # le sommet de départ sera toujours 'A' et si le graphe n'est pas connexe on y va en ordre alphabetique
@@ -108,10 +152,11 @@ def visiter_largeur(G, noeud):
         
     
 if __name__ == "__main__":
-    G = generer_graphe(random.randint(5,10), 0.3, False)
-    conversion_nx_cytoscape(G, False)
+   # G = generer_graphe(random.randint(5,10), 0.3, False)
+   # conversion_nx_cytoscape(G, False)
+    app.run(debug=True)
     #afficher_graphe(G, False)
-    parcours_largeur(G)
+    #parcours_largeur(G)
 
 # pour les noeuds interactifs
 # si on clic et la comparaison de parcours ok 
