@@ -17,9 +17,15 @@ Par la suite pour lancer le programme dans un terminal il suffit de faire cette 
 python3 graphe.py
 ```
 
+Le texte 
+```
+Dash is running on http://127.0.0.1:8050/
+```
+devrait apparaître et en suivant le lien une page HTML vous permettant de générer les graphes devrait apparaître.
+
 ## Fonctionnalités
 - [x] Génération de graphes aléatoires
 - [x] Conversion de graphes Networkx vers Dash Cytoscape
-- [ ] Visualisation de graphe avec Dash Cytoscape
+- [x] Visualisation de graphe avec Dash Cytoscape
 - [ ] Interface interactive
 - [ ] Exploration des graphes interactive
