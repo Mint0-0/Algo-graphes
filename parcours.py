@@ -16,7 +16,7 @@ def visiter_profondeur(G, noeud, parcours):
         if G.nodes[voisin]['marque'] == False:
             G.nodes[voisin]['parent'] = noeud
             G.nodes[voisin]['distance'] = G.nodes[noeud]['distance'] + 1
-            visiter_profondeur(G, voisin)
+            visiter_profondeur(G, voisin, parcours)
     
 def parcours_largeur(G): 
     parcours = []
