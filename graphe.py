@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import random
 import string
+from parcours import parcours_profondeur, parcours_largeur
 
 app = dash.Dash(__name__)
 cyto.load_extra_layouts()
@@ -89,6 +90,12 @@ def generer_graphe_dash(n_clicks, type_parcours):
     option_poids = False
 
     G = generer_graphe(nb_noeuds, proba, option_poids)
+    
+    if type_parcours == 'profondeur':
+        parcours_profondeur(G)
+    if type_parcours == 'largeur':
+        parcours_largeur(G)
+    
     elements = conversion_nx_cytoscape(G, option_poids)
     return elements
 
@@ -102,6 +109,12 @@ def update_graph(n_clicks, type_parcours):
     option_poids = False  
 
     G = generer_graphe(nb_noeuds, proba, option_poids)
+    
+    if type_parcours == 'profondeur':
+        parcours_profondeur(G)
+    if type_parcours == 'largeur':
+        parcours_largeur(G)
+    
     elements = conversion_nx_cytoscape(G, option_poids)
     return elements
 
