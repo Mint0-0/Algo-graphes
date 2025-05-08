@@ -28,6 +28,31 @@ def generer_graphe(nb_noeuds, vertice_proba, option_poids):
             G[u][v]['weight'] = random.randint(1, 10)
     return G
 
+
+def conversion_nx_cytoscape(G, option_poids):
+    elements = []
+    
+    # conversion des sommets
+    for node in G.nodes():
+        donnee_sommet = {
+            'data': {'id': node, 'label': node}
+        }
+        elements.append(donnee_sommet)
+    
+    # conversion des arêtes
+    for u, v in G.edges():
+        donnee_arete = {
+            'source': u,
+            'target': v
+        }
+        elements.append({'data': donnee_arete})
+        
+    print(elements)
+
+
+
+
+
 # noeuds -> nx
 # lignes -> plt
 def afficher_graphe(G, option_poids):
@@ -84,7 +109,8 @@ def visiter_largeur(G, noeud):
     
 if __name__ == "__main__":
     G = generer_graphe(random.randint(5,10), 0.3, False)
-    afficher_graphe(G, False)
+    conversion_nx_cytoscape(G, False)
+    #afficher_graphe(G, False)
     parcours_largeur(G)
 
 # pour les noeuds interactifs
