@@ -104,19 +104,7 @@ def update_graph(n_clicks, type_parcours):
     if n_clicks is None:
         return []
 
-    nb_noeuds = random.randint(5, 10)
-    proba = 0.3
-    option_poids = False  
-
-    G = generer_graphe(nb_noeuds, proba, option_poids)
-    
-    if type_parcours == 'profondeur':
-        parcours_profondeur(G)
-    if type_parcours == 'largeur':
-        parcours_largeur(G)
-    
-    elements = conversion_nx_cytoscape(G, option_poids)
-    return elements
+    return generer_graphe_dash(n_clicks, type_parcours)
 
 # noeuds -> nx
 # lignes -> plt
