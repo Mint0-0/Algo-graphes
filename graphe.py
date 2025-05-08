@@ -106,29 +106,9 @@ def update_graph(n_clicks, type_parcours):
 
     return generer_graphe_dash(n_clicks, type_parcours)
 
-# noeuds -> nx
-# lignes -> plt
-def afficher_graphe(G, option_poids):
-    couleurs = ["#CCFF66" if node == "A" else "#FFCC99" for node in G.nodes()]
-
-    pos = nx.spring_layout(G, seed = 42)
-    
-    nx.draw(G, with_labels=True, node_color=couleurs, edge_color="gray")
-    if option_poids:
-        poids_vertice = {}
-        for u, v, data in G.edges(data = True):
-            poids_vertice[(u, v)] = data['weight']
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=poids_vertice)
-    
-    plt.show()
-    
 if __name__ == "__main__":
-   # G = generer_graphe(random.randint(5,10), 0.3, False)
-   # conversion_nx_cytoscape(G, False)
     app.run(debug=True)
-    #afficher_graphe(G, False)
-    #parcours_largeur(G)
-
+  
 # pour les noeuds interactifs
 # si on clic et la comparaison de parcours ok 
 #   -> noeud change de couleur
