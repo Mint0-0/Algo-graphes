@@ -56,7 +56,18 @@ app.layout = html.Div([
     html.H1("Graphe aléatoire"),
 html.Div([
         html.Button("Générer le graphe", id='generate-btn'),
-    ], style={'margin-bottom': '20px'}),
+    ],
+        style={'margin-bottom': '20px'}),
+        dcc.Dropdown(
+    id='parcours-option',
+    options=[
+        {'label': 'Parcours en profondeur', 'value': 'profondeur'},
+        {'label': 'Parcours en largeur', 'value': 'largeur'}
+    ],
+    value='profondeur',
+    clearable=False,
+),
+    
     
      cyto.Cytoscape(
         id='cytoscape-graph',
@@ -69,9 +80,10 @@ html.Div([
 @app.callback(
     Output('cytoscape-graph', 'elements'),
     Input('generate-btn', 'n_clicks'),
+    State('parcours-option', 'value')
 )
 
-def generer_graphe_dash(n_clicks):
+def generer_graphe_dash(n_clicks, type_parcours):
     nb_noeuds = random.randint(5, 10)
     proba = 0.3
     option_poids = False
@@ -81,7 +93,7 @@ def generer_graphe_dash(n_clicks):
     return elements
 
 
-def update_graph(n_clicks):
+def update_graph(n_clicks, type_parcours):
     if n_clicks is None:
         return []
 
