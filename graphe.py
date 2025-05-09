@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import random
 import string
+from parcours import parcours_profondeur, parcours_largeur
 
 app = dash.Dash(__name__)
 cyto.load_extra_layouts()
@@ -56,7 +57,18 @@ app.layout = html.Div([
     html.H1("Graphe aléatoire"),
 html.Div([
         html.Button("Générer le graphe", id='generate-btn'),
-    ], style={'margin-bottom': '20px'}),
+    ],
+        style={'margin-bottom': '20px'}),
+        dcc.Dropdown(
+    id='parcours-option',
+    options=[
+        {'label': 'Parcours en profondeur', 'value': 'profondeur'},
+        {'label': 'Parcours en largeur', 'value': 'largeur'}
+    ],
+    value='profondeur',
+    clearable=False,
+),
+    
     
      cyto.Cytoscape(
         id='cytoscape-graph',
@@ -69,53 +81,34 @@ html.Div([
 @app.callback(
     Output('cytoscape-graph', 'elements'),
     Input('generate-btn', 'n_clicks'),
+    State('parcours-option', 'value')
 )
 
-def generer_graphe_dash(n_clicks):
+def generer_graphe_dash(n_clicks, type_parcours):
     nb_noeuds = random.randint(5, 10)
     proba = 0.3
     option_poids = False
 
     G = generer_graphe(nb_noeuds, proba, option_poids)
+    
+    if type_parcours == 'profondeur':
+        parcours_profondeur(G)
+    if type_parcours == 'largeur':
+        parcours_largeur(G)
+    
     elements = conversion_nx_cytoscape(G, option_poids)
     return elements
 
 
-def update_graph(n_clicks):
+def update_graph(n_clicks, type_parcours):
     if n_clicks is None:
         return []
 
-    nb_noeuds = random.randint(5, 10)
-    proba = 0.3
-    option_poids = False  
+    return generer_graphe_dash(n_clicks, type_parcours)
 
-    G = generer_graphe(nb_noeuds, proba, option_poids)
-    elements = conversion_nx_cytoscape(G, option_poids)
-    return elements
-
-# noeuds -> nx
-# lignes -> plt
-def afficher_graphe(G, option_poids):
-    couleurs = ["#CCFF66" if node == "A" else "#FFCC99" for node in G.nodes()]
-
-    pos = nx.spring_layout(G, seed = 42)
-    
-    nx.draw(G, with_labels=True, node_color=couleurs, edge_color="gray")
-    if option_poids:
-        poids_vertice = {}
-        for u, v, data in G.edges(data = True):
-            poids_vertice[(u, v)] = data['weight']
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=poids_vertice)
-    
-    plt.show()
-    
 if __name__ == "__main__":
-   # G = generer_graphe(random.randint(5,10), 0.3, False)
-   # conversion_nx_cytoscape(G, False)
     app.run(debug=True)
-    #afficher_graphe(G, False)
-    #parcours_largeur(G)
-
+  
 # pour les noeuds interactifs
 # si on clic et la comparaison de parcours ok 
 #   -> noeud change de couleur
