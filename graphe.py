@@ -38,7 +38,7 @@ def conversion_nx_cytoscape(G, option_poids):
     # conversion des sommets
     for node in G.nodes():
         donnee_sommet = {
-            'data': {'id': node, 'label': node}
+            'data': {'id': node, 'label': node},
         }
         elements.append(donnee_sommet)
     
@@ -50,40 +50,41 @@ def conversion_nx_cytoscape(G, option_poids):
         }
         elements.append({'data': donnee_arete})
         
-    print(elements)
     return elements
 
 app.layout = html.Div([
     html.H1("Graphe aléatoire"),
-html.Div([
+    html.Div([
         html.Button("Générer le graphe", id='generate-btn'),
     ],
-        style={'margin-bottom': '20px'}),
-        dcc.Dropdown(
-    id='parcours-option',
-    options=[
-        {'label': 'Parcours en profondeur', 'value': 'profondeur'},
-        {'label': 'Parcours en largeur', 'value': 'largeur'}
-    ],
-    value='profondeur',
-    clearable=False,
-),
-    
-    
-     cyto.Cytoscape(
+    style={'margin-bottom': '20px'}),
+    dcc.Dropdown(
+        id='parcours-option',
+        options=[
+            {'label': 'Parcours en profondeur', 'value': 'profondeur'},
+            {'label': 'Parcours en largeur', 'value': 'largeur'}
+                ],
+        value='profondeur',
+        clearable=False,
+    ),
+    dcc.Store(id='reponse'),
+    dcc.Store(id='clicked-nodes', data=[]),
+    cyto.Cytoscape(
         id='cytoscape-graph',
         layout={'name': 'cose'},
         style={'width': '100%', 'height': '500px'},
-        elements=[]
-    ) 
+        elements=[],
+    )
     ])
 
 @app.callback(
     Output('cytoscape-graph', 'elements'),
+    Output('reponse', 'data'),
     Input('generate-btn', 'n_clicks'),
     State('parcours-option', 'value')
 )
 
+# A AJOUTER: reinitialiser data[] pour prendre un nouveau parcours
 def generer_graphe_dash(n_clicks, type_parcours):
     nb_noeuds = random.randint(5, 10)
     proba = 0.3
@@ -92,19 +93,39 @@ def generer_graphe_dash(n_clicks, type_parcours):
     G = generer_graphe(nb_noeuds, proba, option_poids)
     
     if type_parcours == 'profondeur':
-        parcours_profondeur(G)
+        chemin = parcours_profondeur(G)
     if type_parcours == 'largeur':
-        parcours_largeur(G)
+        chemin = parcours_largeur(G)
     
     elements = conversion_nx_cytoscape(G, option_poids)
-    return elements
+    return elements, chemin
+
+@app.callback(
+    Output('clicked-nodes', 'data'),
+    Input('cytoscape-graph', 'tapNodeData'),
+    State('clicked-nodes', 'data'),
+    prevent_initial_call=True
+)
 
 
-def update_graph(n_clicks, type_parcours):
-    if n_clicks is None:
-        return []
+def stockage_noeud_clique(tapped_node_data, clicked_nodes):
+    if tapped_node_data:
+        node_id = tapped_node_data['id']
+        if node_id not in clicked_nodes:
+            clicked_nodes.append(node_id)
+    return clicked_nodes
 
-    return generer_graphe_dash(n_clicks, type_parcours)
+app.clientside_callback(
+    """
+    function(clicked_nodes, elements, parcours) {
+        return parcours_complet(clicked_nodes, elements, parcours);
+    }
+    """,
+    Input('clicked-nodes', 'data'),
+    State('cytoscape-graph', 'elements'),
+    State('reponse', 'data')
+)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
@@ -117,3 +138,9 @@ if __name__ == "__main__":
 # si on clic et il y a une erreur dans le parcours
 #   -> node becomes red and fades back to orange
 #
+
+
+# ajouter un call back ou si clicked-nodes sont = a la taille du graphe on vérifie si le parcours est corrct
+# une comparaison simple de deux tableaux
+
+# ajouter un bouton retour pour retirer un noeud de data en cas d'Erreur de l'utilisateur
