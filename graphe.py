@@ -114,6 +114,17 @@ def stockage_noeud_clique(tapped_node_data, clicked_nodes):
             clicked_nodes.append(node_id)
     return clicked_nodes
 
+app.clientside_callback(
+    """
+    function(clicked_nodes, elements) {
+        return parcours_complet(clicked_nodes, elements);
+    }
+    """,
+    Input('clicked-nodes', 'data'),   
+    State('cytoscape-graph', 'elements')  
+)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
   
