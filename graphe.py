@@ -55,27 +55,26 @@ def conversion_nx_cytoscape(G, option_poids):
 
 app.layout = html.Div([
     html.H1("Graphe aléatoire"),
-html.Div([
+    html.Div([
         html.Button("Générer le graphe", id='generate-btn'),
     ],
-        style={'margin-bottom': '20px'}),
-        dcc.Dropdown(
-    id='parcours-option',
-    options=[
-        {'label': 'Parcours en profondeur', 'value': 'profondeur'},
-        {'label': 'Parcours en largeur', 'value': 'largeur'}
-    ],
-    value='profondeur',
-    clearable=False,
-),
+    style={'margin-bottom': '20px'}),
+    dcc.Dropdown(
+        id='parcours-option',
+        options=[
+            {'label': 'Parcours en profondeur', 'value': 'profondeur'},
+            {'label': 'Parcours en largeur', 'value': 'largeur'}
+                ],
+        value='profondeur',
+        clearable=False,
+    ),
     dcc.Store(id='clicked-nodes', data=[]),
     cyto.Cytoscape(
-    id='cytoscape-graph',
-    layout={'name': 'cose'},
-    style={'width': '100%', 'height': '500px'},
-    elements=[],
-    
-)
+        id='cytoscape-graph',
+        layout={'name': 'cose'},
+        style={'width': '100%', 'height': '500px'},
+        elements=[],
+    )
     ])
 
 @app.callback(
@@ -84,6 +83,7 @@ html.Div([
     State('parcours-option', 'value')
 )
 
+# A AJOUTER: reinitialiser data[] pour prendre un nouveau parcours
 def generer_graphe_dash(n_clicks, type_parcours):
     nb_noeuds = random.randint(5, 10)
     proba = 0.3
@@ -140,3 +140,5 @@ if __name__ == "__main__":
 
 # ajouter un call back ou si clicked-nodes sont = a la taille du graphe on vérifie si le parcours est corrct
 # une comparaison simple de deux tableaux
+
+# ajouter un bouton retour pour retirer un noeud de data en cas d'Erreur de l'utilisateur
