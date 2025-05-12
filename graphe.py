@@ -50,7 +50,6 @@ def conversion_nx_cytoscape(G, option_poids):
         }
         elements.append({'data': donnee_arete})
         
-    print(elements)
     return elements
 
 app.layout = html.Div([
@@ -68,6 +67,7 @@ app.layout = html.Div([
         value='profondeur',
         clearable=False,
     ),
+    dcc.Store(id='reponse'),
     dcc.Store(id='clicked-nodes', data=[]),
     cyto.Cytoscape(
         id='cytoscape-graph',
@@ -79,6 +79,7 @@ app.layout = html.Div([
 
 @app.callback(
     Output('cytoscape-graph', 'elements'),
+    Output('reponse', 'data'),
     Input('generate-btn', 'n_clicks'),
     State('parcours-option', 'value')
 )
@@ -92,12 +93,12 @@ def generer_graphe_dash(n_clicks, type_parcours):
     G = generer_graphe(nb_noeuds, proba, option_poids)
     
     if type_parcours == 'profondeur':
-        parcours_profondeur(G)
+        chemin = parcours_profondeur(G)
     if type_parcours == 'largeur':
-        parcours_largeur(G)
+        chemin = parcours_largeur(G)
     
     elements = conversion_nx_cytoscape(G, option_poids)
-    return elements
+    return elements, chemin
 
 @app.callback(
     Output('clicked-nodes', 'data'),
@@ -116,12 +117,13 @@ def stockage_noeud_clique(tapped_node_data, clicked_nodes):
 
 app.clientside_callback(
     """
-    function(clicked_nodes, elements) {
-        return parcours_complet(clicked_nodes, elements);
+    function(clicked_nodes, elements, parcours) {
+        return parcours_complet(clicked_nodes, elements, parcours);
     }
     """,
-    Input('clicked-nodes', 'data'),   
-    State('cytoscape-graph', 'elements')  
+    Input('clicked-nodes', 'data'),
+    State('cytoscape-graph', 'elements'),
+    State('reponse', 'data')
 )
 
 

@@ -5,12 +5,21 @@
   * @param {*} elements éléments du graphes
   * @returns la liste des noeuds cliqué
   */
- function parcours_complet(clicked_nodes, elements) {
+ function parcours_complet(clicked_nodes, elements, parcours) {
+    let ok = true;
     let noeuds = elements.filter(el => el.data && el.data.id && !el.data.source && !el.data.target)     // ignore les aretes
                             .map(el => el.data.id);  // on veut juste l'id du noeud pour plus tard vérifier le parcours
 
+    console.log(parcours)
+    console.log(clicked_nodes)
     if (clicked_nodes.length === noeuds.length) {
-        alert("parcours complet");  
+        for (let i = 0; i < parcours.length; i++) {
+            if (clicked_nodes[i] !== parcours[i]){
+                ok = false
+            }
+    }
+    alert(ok ? "ok" : "erreur");
+      
     }
     return clicked_nodes;
 }
