@@ -8,7 +8,7 @@ import random
 import string
 from parcours import parcours_profondeur, parcours_largeur
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, prevent_initial_callbacks='initial_duplicate')
 cyto.load_extra_layouts()
 
 # genere un graphe aleatoire
@@ -56,8 +56,11 @@ app.layout = html.Div([
     html.H1("Graphe aléatoire"),
     html.Div([
         html.Button("Générer le graphe", id='generate-btn'),
+        html.Button("Retour", id='retour'),
     ],
-    style={'margin-bottom': '20px'}),
+    style={'display': 'flex',
+            'gap': '10px',  
+            'margin-bottom': '20px'}),
     dcc.Dropdown(
         id='parcours-option',
         options=[
@@ -81,10 +84,11 @@ app.layout = html.Div([
     Output('cytoscape-graph', 'elements'),
     Output('reponse', 'data'),
     Input('generate-btn', 'n_clicks'),
-    State('parcours-option', 'value')
+    State('parcours-option', 'value'),
+    allow_duplicate=True,
+    prevent_initial_call=True,
 )
 
-# A AJOUTER: reinitialiser data[] pour prendre un nouveau parcours
 def generer_graphe_dash(n_clicks, type_parcours):
     nb_noeuds = random.randint(5, 10)
     proba = 0.3
@@ -98,38 +102,37 @@ def generer_graphe_dash(n_clicks, type_parcours):
         chemin = parcours_largeur(G)
     
     elements = conversion_nx_cytoscape(G, option_poids)
+    
     return elements, chemin
-
-@app.callback(
-    Output('clicked-nodes', 'data'),
-    Input('cytoscape-graph', 'tapNodeData'),
-    State('clicked-nodes', 'data'),
-    prevent_initial_call=True
-)
-
-
-def stockage_noeud_clique(tapped_node_data, clicked_nodes):
-    if tapped_node_data:
-        node_id = tapped_node_data['id']
-        if node_id not in clicked_nodes:
-            clicked_nodes.append(node_id)
-    return clicked_nodes
 
 app.clientside_callback(
     """
-    function(clicked_nodes, elements, parcours) {
+    function(tapped_node, clicked_nodes, elements, parcours) {
+        if (!tapped_node) return window.dash_clientside.no_update;
+
+        const node_id = tapped_node.id;
+        if (!clicked_nodes.includes(node_id)) {
+            clicked_nodes.push(node_id);
+        }
         return parcours_complet(clicked_nodes, elements, parcours);
     }
     """,
-    Input('clicked-nodes', 'data'),
+    Output('clicked-nodes', 'data'),
+    Input('cytoscape-graph', 'tapNodeData'),
+    State('clicked-nodes', 'data'),
     State('cytoscape-graph', 'elements'),
-    State('reponse', 'data')
+    State('reponse', 'data'),
+    prevent_initial_call=True
 )
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-  
+
+
+
+
+    
 # pour les noeuds interactifs
 # si on clic et la comparaison de parcours ok 
 #   -> noeud change de couleur
