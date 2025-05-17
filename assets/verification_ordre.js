@@ -19,7 +19,7 @@
             }
     }
     alert(ok ? "ok" : "erreur");
-      
+    clicked_nodes = []
     }
-    return clicked_nodes;
+    return clicked_nodes
 }
