@@ -10,8 +10,6 @@
     let noeuds = elements.filter(el => el.data && el.data.id && !el.data.source && !el.data.target)     // ignore les aretes
                             .map(el => el.data.id);  // on veut juste l'id du noeud pour plus tard vérifier le parcours
 
-    console.log(parcours)
-    console.log(clicked_nodes)
     if (clicked_nodes.length === noeuds.length) {
         for (let i = 0; i < parcours.length; i++) {
             if (clicked_nodes[i] !== parcours[i]){
@@ -19,7 +17,7 @@
             }
     }
     alert(ok ? "ok" : "erreur");
-      
+    clicked_nodes = []
     }
-    return clicked_nodes;
+    return clicked_nodes
 }

@@ -5,14 +5,12 @@ body{
 button {
     background-color: #3437db;
     display: flex;
-    
+    cursor: pointer;
     color: white;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-
 }
 
 h1{
@@ -28,5 +26,4 @@ h1{
 
 #parcours-option {
     color: #000;
-
 }
