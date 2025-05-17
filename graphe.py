@@ -89,7 +89,6 @@ app.layout = html.Div([
     prevent_initial_call=True,
 )
 
-# A AJOUTER: reinitialiser data[] pour prendre un nouveau parcours
 def generer_graphe_dash(n_clicks, type_parcours):
     nb_noeuds = random.randint(5, 10)
     proba = 0.3
