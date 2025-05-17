@@ -56,8 +56,11 @@ app.layout = html.Div([
     html.H1("Graphe aléatoire"),
     html.Div([
         html.Button("Générer le graphe", id='generate-btn'),
+        html.Button("Retour", id='retour'),
     ],
-    style={'margin-bottom': '20px'}),
+    style={'display': 'flex',
+            'gap': '10px',  
+            'margin-bottom': '20px'}),
     dcc.Dropdown(
         id='parcours-option',
         options=[
