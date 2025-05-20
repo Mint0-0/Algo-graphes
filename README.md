@@ -35,9 +35,28 @@ Le texte
 ```
 Dash is running on http://127.0.0.1:8050/
 ```
-devrait apparaître et en suivant le lien une page HTML vous permettant de générer les graphes devrait apparaître.
+devrait apparaître et en suivant le lien une page HTML vous permettant de générer et d'interagir avec les graphes devrait apparaître.
 
-## onctionnalités / Features
+
+To run the project, certain libraries are required. On Windows, the installation can be done as follows:
+```
+pip install dash dash-cytoscape networkx matplotlib plotly
+```
+Then, to launch the program from a terminal, simply run the following command:
+
+```
+python3 graphe.py
+```
+The following message should appear:
+
+```
+Dash is running on http://127.0.0.1:8050/
+```
+By opening that link in a browser, an HTML page will appear allowing you to generate and interact with graphs.
+
+---
+
+## Fonctionnalités / Features
 - [x] Génération de graphes aléatoires
 - [x] Conversion de graphes Networkx vers Dash Cytoscape
 - [x] Visualisation de graphe avec Dash Cytoscape
