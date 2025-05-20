@@ -27,5 +27,11 @@ devrait apparaître et en suivant le lien une page HTML vous permettant de gén�
 - [x] Génération de graphes aléatoires
 - [x] Conversion de graphes Networkx vers Dash Cytoscape
 - [x] Visualisation de graphe avec Dash Cytoscape
-- [ ] Interface interactive
-- [ ] Exploration des graphes interactive
+- [x] Interface interactive
+- [x] Exploration des graphes interactive
+- [ ] retour arrière en cas d'erreur
+- [x] parcours en profondeur
+- [ ] parcours en largeur
+- [ ] algorithme Prim
+- [ ] algorithme Kruskal
+- [ ] algorithme Dikjstra
