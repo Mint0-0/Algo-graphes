@@ -38,6 +38,7 @@ Dash is running on http://127.0.0.1:8050/
 devrait apparaître et en suivant le lien une page HTML vous permettant de générer et d'interagir avec les graphes devrait apparaître.
 
 
+
 To run the project, certain libraries are required. On Windows, the installation can be done as follows:
 ```
 pip install dash dash-cytoscape networkx matplotlib plotly
@@ -57,14 +58,14 @@ By opening that link in a browser, an HTML page will appear allowing you to gene
 ---
 
 ## Fonctionnalités / Features
-- [x] Génération de graphes aléatoires
-- [x] Conversion de graphes Networkx vers Dash Cytoscape
-- [x] Visualisation de graphe avec Dash Cytoscape
-- [x] Interface interactive
-- [x] Exploration des graphes interactive
-- [ ] retour arrière en cas d'erreur
-- [x] parcours en profondeur
-- [ ] parcours en largeur
-- [ ] algorithme Prim
-- [ ] algorithme Kruskal
-- [ ] algorithme Dikjstra
+- [x] Génération de graphes aléatoires / Random graph generation
+- [x] Conversion de graphes Networkx vers Dash Cytoscape / NetworkX to Dash Cytoscape graph conversion
+- [x] Visualisation de graphe avec Dash Cytoscape / Graph visualization with Dash Cytoscape
+- [x] Interface interactive / Interactive interface
+- [x] Exploration des graphes interactive / Interactive graph exploration
+- [ ] Retour arrière en cas d'erreur / Undo feature for errors
+- [x] Parcours en profondeur / Depth-first search (DFS)
+- [ ] Parcours en largeur / Breadth-first search (BFS)
+- [ ] Algorithme Prim / Prim’s algorithm
+- [ ] Algorithme Kruskal / Kruskal’s algorithm
+- [ ] Algorithme Dikjstra / Dijkstra’s algorithm
