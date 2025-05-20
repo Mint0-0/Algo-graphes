@@ -4,6 +4,10 @@
 ## Description
 Ce projet est un programme python permettant la pratique de parcours d'algorithmes tels que le parcours en largeur, le parcours en profondeur... Le programme propose des graphes aléatoirement générés avec NetworkX pour visualiser et pratiquer des parcours plus facilement.
 
+## Pourquoi?
+L’idée du projet est d’aider les personnes souhaitant pratiquer leur compréhension des parcours de graphes. La pratique est essentielle pour solidifier les connaissances des algorithmes de graphes, mais peu d’exercices interactifs sont disponibles.
+Ce projet a donc pour objectif de générer automatiquement des graphes et de permettre à l’utilisateur de s’exercer en testant ses réponses à l’aide d’un système interactif. Il devient ainsi possible de pratiquer différents types d’algorithmes sans limitation sur la quantité de ressources.
+
 ## Utilisation
 
 pour pouvoir rouler le projet, certaines librairies sont nécéssaires. Sous Windows l'installation des librairies peut se faire comme ceci:
