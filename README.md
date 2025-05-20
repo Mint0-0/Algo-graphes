@@ -13,6 +13,11 @@ The program generates random graphs using NetworkX, making it easier to visualiz
 L’idée du projet est d’aider les personnes souhaitant pratiquer leur compréhension des parcours de graphes. La pratique est essentielle pour solidifier les connaissances des algorithmes de graphes, mais peu d’exercices interactifs sont disponibles.
 Ce projet a donc pour objectif de générer automatiquement des graphes et de permettre à l’utilisateur de s’exercer en testant ses réponses à l’aide d’un système interactif. Il devient ainsi possible de pratiquer différents types d’algorithmes sans limitation sur la quantité de ressources.
 
+The goal of this project is to help users practice and deepen their understanding of graph traversal algorithms. Practice is essential for mastering graph algorithms, but interactive exercises are scarce.
+This tool generates random graphs and allows users to test their answers interactively, making it possible to train various algorithms without any limitations on the amount of ressources.
+
+---
+
 ## Utilisation / Usage
 
 pour pouvoir rouler le projet, certaines librairies sont nécéssaires. Sous Windows l'installation des librairies peut se faire comme ceci:
