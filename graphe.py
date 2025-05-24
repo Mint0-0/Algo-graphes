@@ -77,7 +77,8 @@ app.layout = html.Div([
         layout={'name': 'cose'},
         style={'width': '100%', 'height': '500px'},
         elements=[],
-    )
+    ),
+    html.Div(id="toast", children="", className="toast hidden")
     ])
 
 @app.callback(
@@ -95,7 +96,7 @@ def generer_graphe_dash(n_clicks, type_parcours):
     option_poids = False
 
     G = generer_graphe(nb_noeuds, proba, option_poids)
-    
+
     if type_parcours == 'profondeur':
         chemin = parcours_profondeur(G)
     if type_parcours == 'largeur':
@@ -127,7 +128,7 @@ app.clientside_callback(
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
 
 
